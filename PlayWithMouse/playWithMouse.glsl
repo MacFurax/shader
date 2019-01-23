@@ -1,6 +1,7 @@
 vec4 NormalizeMouse()
 {
     vec4 mousePos = vec4(iMouse.xy / iResolution.xy,0.,0.); // xy 0 <> 1
+    mousePos.xy = 1. - mousePos.xy;
     mousePos.zw = iMouse.zw; // click button states are just copied
     mousePos.xy -= .5; // xy -.5 <> .5
     mousePos.xy *= 2.; // xy -1. <> 1.
@@ -18,5 +19,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
    vec4 m = NormalizeMouse();
 
-   fragColor = vec4(m.x, m.y, m.z, 1.);
+   fragColor = vec4(m.x, m.y, 0., 1.);
 }
