@@ -61,7 +61,7 @@ float opDisplace( float v, in vec3 p )
  */
 float sceneSDF(vec3 samplePoint) {
     
-    float s1 = sphereSDF(samplePoint+vec3(.0,.0,.3), 1.0);
+    float s1 = sphereSDF(samplePoint+vec3(.0,.0+(sin(iTime*.5)*0.75),.3+(sin(iTime)*0.75)), 1.0);
     float s2 = sphereSDF(samplePoint+vec3(.5+(sin(iTime/2.)*1.5), .2+(sin(iTime/2.)*1.), -.5), 0.7);    
     
     float d = opSmoothUnion( s2, s1, 0.5); 
