@@ -2,6 +2,17 @@
 // https://www.youtube.com/watch?v=PBxuVlp7nuM
 // 
 
+vec4 NormalizeMouse()
+{
+    vec4 mousePos = vec4(iMouse.xy / iResolution.xy,0.,0.); // xy 0 <> 1
+    mousePos.zw = iMouse.zw; // click button states are just copied
+    mousePos.xy -= .5; // xy -.5 <> .5
+    mousePos.xy *= 2.; // xy -1. <> 1.
+    mousePos.x *= iResolution.x/iResolution.y; // compensate for aspect ratio
+    return mousePos;
+}
+
+
 //
 // This function return the distance from a point in 3D space 
 // to the view ray
@@ -35,13 +46,26 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     uv -= .5; // -.5 <> .5
     uv.x *= iResolution.x/iResolution.y; // compensate for aspect ratio
 
-    // warning if we move the camera back allow we zomm in
-    // field of view become narrower
-    // so we nned to also move the screen back
-    vec3 ro = vec3(3.*sin(t),2.,-3.*cos(t)); //ray origine (eye) in front of screen
+    vec4 mousePos = NormalizeMouse();
+
+    //vec3 ro = vec3(3.*sin(t),2.,-3.*cos(t)); //ray origine (eye) in front of screen
+    float zoom = 1.;
+    vec3 ro = vec3(0., 0., -3.);
+
+    if( mousePos.z > .5)
+    {
+        ro = vec3(0.+mousePos.x*10., 0.+mousePos.y*10., -3.); //ray origine (eye) in front of screen
+    }
+
+    if( mousePos.w > .5)
+    {
+        zoom += mousePos.y;
+    }
+    
+
     vec3 lookAt = vec3(.5);
 
-    float zoom = 1.;
+    
     vec3 f = normalize(lookAt-ro); // camera FORWARD
     vec3 r = cross( vec3(0.,1.,0.), f ); // camera RIGHT
     vec3 u = cross( f, r); // camera UP
