@@ -30,6 +30,7 @@ float DrawPoint(vec3 ro, vec3 rd, vec3 p)
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
+    float t  =iGlobalTime;
 	vec2 uv = fragCoord.xy / iResolution.xy; // 0 <> 1
     uv -= .5; // -.5 <> .5
     uv.x *= iResolution.x/iResolution.y; // compensate for aspect ratio
@@ -37,8 +38,18 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // warning if we move the camera back allow we zomm in
     // field of view become narrower
     // so we nned to also move the screen back
-    vec3 ro = vec3(0.,0.,-3.); //ray origine (eye) in front of screen
-    vec3 rd = vec3(uv.x, uv.y, -2.) - ro; // ray vector from origine to point on screen
+    vec3 ro = vec3(3.*sin(t),2.,-3.*cos(t)); //ray origine (eye) in front of screen
+    vec3 lookAt = vec3(.5);
+
+    float zoom = 1.;
+    vec3 f = normalize(lookAt-ro); // camera FORWARD
+    vec3 r = cross( vec3(0.,1.,0.), f ); // camera RIGHT
+    vec3 u = cross( f, r); // camera UP
+
+    vec3 c =  ro + f*zoom; // center of screen pos
+    vec3 i = c + uv.x*r + uv.y*u; // intersetction between ray and intersection
+
+    vec3 rd = i - ro; // ray vector from origine to point on screen
         
     float d = 0.;
 
