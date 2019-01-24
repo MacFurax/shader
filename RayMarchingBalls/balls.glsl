@@ -215,8 +215,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     
     vec3 K_a = vec3(0.1, 0.1, 0.3);
     vec3 K_d = vec3(0.1, 0.5, 0.5);
-    vec3 K_s = vec3(0.5, 0.2, 0.1);
-    float shininess = 10.0;
+    vec3 K_s = vec3(0.7, 0.2, 0.1);
+    float shininess = 20.0;
     
     vec3 color = phongIllumination(K_a, K_d, K_s, shininess, p, eye);
     

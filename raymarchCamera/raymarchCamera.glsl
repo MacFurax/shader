@@ -45,8 +45,6 @@ float DrawPoint(vec3 ro, vec3 rd, vec3 p)
 }
 
 
-
-
 float GetDist(vec3 p) {
 	vec4 s = vec4(0., 1., 6., 1.);
     
@@ -158,6 +156,27 @@ float RayMarch(vec3 ro, vec3 rd) {
     return dO;
 }
 
+vec3 applyFog( in vec3  rgb,       // original color of the pixel
+               in float distance, // camera to point distance
+               in float b ) // fog density
+{
+    float fogAmount = 1.0 - exp( -distance*b );
+    vec3  fogColor  = vec3(0.5,0.4,0.2);
+    return mix( rgb, fogColor, fogAmount );
+}
+
+vec3 applyFogY( in vec3  rgb,      // original color of the pixel
+               in float distance, // camera to point distance
+               in vec3  rayOri,   // camera position
+               in vec3  rayDir, // camera to point vector
+               in float b,// fog density
+               in float c )  // vertical density ?
+{
+    float fogAmount = c * exp(-rayOri.y*b) * (1.0-exp( -distance*rayDir.y*b ))/rayDir.y;
+    vec3  fogColor  = vec3(0.5,0.6,0.7);
+    return mix( rgb, fogColor, fogAmount );
+}
+
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
     float t  =iGlobalTime;
@@ -202,9 +221,12 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     vec3 K_a = vec3(0.1, 0.1, 0.3);
     vec3 K_d = vec3(0.1, 0.5, 0.5);
     vec3 K_s = vec3(0.5, 0.2, 0.1);
-    float shininess = 1.0;
+    float shininess = 50.0;
 
     vec3 color = phongIllumination(K_a, K_d, K_s, shininess, p, ro);
+
+    //color = applyFog( color, d, 0.005);
+    //color = applyFogY( color, d, ro, rd, 0.5, .2);
 
     fragColor = vec4(color, 1.0);
 }
