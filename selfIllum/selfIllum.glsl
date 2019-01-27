@@ -236,7 +236,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     
     //color += fromCenterIntensity * vec3(0.4, .4, 0.); 
 
-    color = applyFog( color, d, 0.05);
+    color = applyFog( color, d, 0.02);
     //color = applyFogY( color, d, ro, rd, 0.05, .1);
 
     fragColor = vec4(color, 1.0);
