@@ -44,9 +44,9 @@ float DrawPoint(vec3 ro, vec3 rd, vec3 p)
     return d;
 }
 
+vec4 s = vec4(0., 1., 6., 1.);
 
 float GetDist(vec3 p) {
-	vec4 s = vec4(0., 1., 6., 1.);
     
     float sphereDist =  length(p-s.xyz)-s.w;
     float planeDist = p.y+1.;
@@ -126,7 +126,7 @@ vec3 phongIllumination(vec3 k_a, vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 e
     vec3 light1Pos = vec3(4.0 * sin(iTime),
                           2.0,
                           4.0 * cos(iTime));
-    vec3 light1Intensity = vec3(0.4, 0.4, 0.4);
+    vec3 light1Intensity = vec3(0.7, 0.7, 0.7);
     
     color += phongContribForLight(k_d, k_s, alpha, p, eye,
                                   light1Pos,
@@ -161,7 +161,7 @@ vec3 applyFog( in vec3  rgb,       // original color of the pixel
                in float b ) // fog density
 {
     float fogAmount = 1.0 - exp( -distance*b );
-    vec3  fogColor  = vec3(0.5,0.4,0.2);
+    vec3  fogColor  = vec3(0.4,0.4,0.4);
     return mix( rgb, fogColor, fogAmount );
 }
 
@@ -187,6 +187,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     vec4 mousePos = NormalizeMouse();
 
     //vec3 ro = vec3(3.*sin(t),2.,-3.*cos(t)); //ray origine (eye) in front of screen
+    // zoom factor, eye pos and lookat
     float zoom = 1.;
     vec3 ro = vec3(0., 1., -3.);
 
@@ -201,7 +202,6 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     }
 
     vec3 lookAt = vec3(0., 1., 0.);
-
     
     vec3 f = normalize(lookAt-ro); // camera FORWARD
     vec3 r = cross( vec3(0.,1.,0.), f ); // camera RIGHT
@@ -223,10 +223,21 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     vec3 K_s = vec3(0.5, 0.2, 0.1);
     float shininess = 50.0;
 
+    vec3 fromCenterToP = normalize( p - s.xyz);
+    float fromCenterIntensity = dot(-rd,fromCenterToP );
+
     vec3 color = phongIllumination(K_a, K_d, K_s, shininess, p, ro);
 
+    float texture = smoothstep( 0.4, 0.5,  fract( p.x + sin(p.y+p.z) + iTime  ));
+
+    color *= texture;
+
+    //fromCenterIntensity *= fromCenterIntensity;
+    
+    //color += fromCenterIntensity * vec3(0.4, .4, 0.); 
+
     color = applyFog( color, d, 0.05);
-    //color = applyFogY( color, d, ro, rd, 0.5, .2);
+    //color = applyFogY( color, d, ro, rd, 0.05, .1);
 
     fragColor = vec4(color, 1.0);
 }
