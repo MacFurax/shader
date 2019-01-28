@@ -218,25 +218,26 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // The closest point on the surface to the eyepoint along the view ray
     vec3 p = ro + d * rd;
     
-    vec3 K_a = vec3(0.1, 0.1, 0.3);
+    vec3 K_a = vec3(0.0667, 0.1569, 0.1922);
     vec3 K_d = vec3(0.1, 0.5, 0.5);
-    vec3 K_s = vec3(0.5, 0.2, 0.1);
-    float shininess = 50.0;
+    vec3 K_s = vec3(0.0157, 0.3255, 0.9922);
+    float shininess = 1.0;
 
     vec3 fromCenterToP = normalize( p - s.xyz);
     float fromCenterIntensity = dot(-rd,fromCenterToP );
 
-    vec3 color = phongIllumination(K_a, K_d, K_s, shininess, p, ro);
-
     float texture = smoothstep( 0.4, 0.5,  fract( p.x + sin(p.y+p.z) + iTime  ));
 
-    color *= texture;
+    //vec3 color = phongIllumination(K_a, K_d, K_s, shininess, p, ro);
+    vec3 color = phongIllumination(K_a, vec3(texture), K_s, shininess, p, ro);
+
+
 
     //fromCenterIntensity *= fromCenterIntensity;
     
     //color += fromCenterIntensity * vec3(0.4, .4, 0.); 
 
-    color = applyFog( color, d, 0.02);
+    //color = applyFog( color, d, 0.02);
     //color = applyFogY( color, d, ro, rd, 0.05, .1);
 
     fragColor = vec4(color, 1.0);
