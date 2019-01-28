@@ -9,26 +9,33 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     uv *= 2.0;
     uv.x *= iResolution.x/iResolution.y;
 
+    // -4 to 4
     uv *= 4.;
     
+    // create cells index
     vec2 index = floor(uv+4.); // row:col index 0 -> 7
     
+    // move few column at interval
     if( mod(index.x,3. ) == .0)
     {
-        float s = max(sin(iTime*.4), 0.);
-        uv.y += s*2.;
+
+        float s = max(mod(iTime+5., 6.)-5., 0.);
+        uv.y -= s*2.;
     }
 
-    if(mod(index.y, 3.) == 0.)
+    // move few rows at interval
+    if(mod(index.y, 4.) == 0.)
     {
-        float s = max(sin(iTime*.4+pi), 0.);
+        float s = max(mod(iTime+3.,6.)-5., 0.);
         uv.x += s*4.;
     }
 
+    // create cells gradiant
     vec2 fractVal = fract(uv); // create cells 0 -> 1
 
-    float c = distance(fractVal, vec2(.5, .5)); // create circle centered in 0->1 cells
-    c = smoothstep(.4, .43, c);
+    // create circle
+    float c = distance(fractVal, vec2(.5, .5)); // create gradiant centered in 0->1 cells
+    c = smoothstep(.4, .43, c); // gradiant to circle
     vec3 color = vec3(c);    
 
     //fragColor = vec4( fractVal.xy, c, 1. );
