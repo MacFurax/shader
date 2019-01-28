@@ -18,24 +18,38 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // move few column at interval
     if( mod(index.x,3. ) == .0)
     {
-
         float s = max(mod(iTime+5., 6.)-5., 0.);
+         s = smoothstep(0.1,0.9,s);
         uv.y -= s*2.;
     }
 
     // move few rows at interval
+    // if(mod(index.y, 4.) == 0.)
+    // {
+    //     float s = max(mod(iTime+3.,6.)-5., 0.);
+    //     uv.x += s*4.;
+    // }
+
     if(mod(index.y, 4.) == 0.)
     {
-        float s = max(mod(iTime+3.,6.)-5., 0.);
+        float s = max(mod((iTime/2.)+4.,6.)-5., 0.);
+        s = smoothstep(0.1,0.9,s);
+        uv.x += s;
+    }
+
+     if(mod(index.y, 3.) == 0.)
+    {
+        float s = max(mod((iTime/2.)+7.,6.)-5., 0.);
+         s = smoothstep(0.1,0.9,s);
         uv.x += s*4.;
     }
 
     // create cells gradiant
-    vec2 fractVal = fract(uv); // create cells 0 -> 1
+    vec2 fractVal = fract(uv); // create cells gradiant 0.0 -> 1.0
 
     // create circle
     float c = distance(fractVal, vec2(.5, .5)); // create gradiant centered in 0->1 cells
-    c = smoothstep(.4, .43, c); // gradiant to circle
+    c = smoothstep(.4, .41, c); // gradiant to circle
     vec3 color = vec3(c);    
 
     //fragColor = vec4( fractVal.xy, c, 1. );
