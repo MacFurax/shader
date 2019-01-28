@@ -49,7 +49,7 @@ vec4 s = vec4(0., 1., 6., 1.);
 float GetDist(vec3 p) {
     
     float sphereDist =  length(p-s.xyz)-s.w;
-    float planeDist = p.y+1.;
+    float planeDist = p.y+4.+sin(p.x-iTime*2.)+sin(p.z)/2.;
     
     float d = min(sphereDist, planeDist);
     //float d = sphereDist;
@@ -219,19 +219,17 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     vec3 p = ro + d * rd;
     
     vec3 K_a = vec3(0.0667, 0.1569, 0.1922);
-    vec3 K_d = vec3(0.1, 0.5, 0.5);
+    vec3 K_d = vec3(0.0, 0.0, 0.0);
     vec3 K_s = vec3(0.0157, 0.3255, 0.9922);
-    float shininess = 1.0;
+    float shininess = 10.0;
 
     vec3 fromCenterToP = normalize( p - s.xyz);
     float fromCenterIntensity = dot(-rd,fromCenterToP );
 
-    float texture = smoothstep( 0.4, 0.5,  fract( p.x + sin(p.y+p.z) + iTime  ));
+    float texture = smoothstep( 0.4, 0.5,  fract( p.x*4. + sin(p.y+p.z) + iTime  ));
 
     //vec3 color = phongIllumination(K_a, K_d, K_s, shininess, p, ro);
-    vec3 color = phongIllumination(K_a, vec3(texture), K_s, shininess, p, ro);
-
-
+    vec3 color = phongIllumination(K_a, vec3(texture, sin(iTime), .1), K_s, shininess, p, ro);
 
     //fromCenterIntensity *= fromCenterIntensity;
     
