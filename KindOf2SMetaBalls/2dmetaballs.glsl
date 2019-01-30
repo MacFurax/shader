@@ -48,7 +48,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float c = (c1+c2+c3+c4+c5)*1.5;
         
     // treshold, comment it to see blur
-    c = (c > .4 ? 1. : .2);
+    //c = (c > .4 ? 1. : .2);
+    c = smoothstep(0.5,0.52,c);
     
     // color
     float s = (sin(iTime) + 1.) * .5;
