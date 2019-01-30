@@ -6,11 +6,11 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     uv.x *= iResolution.x/iResolution.y;
     
     // dein circle position and radius
-    vec3 cercle1 = vec3(-.2, .01, .07);
+    vec3 cercle1 = vec3(-.2, .01, .2);
     vec3 cercle2 = vec3(.2, -.1, .1);
     vec3 cercle3 = vec3(0., 0., .2);
     vec3 cercle4 = vec3(-0.3, -0.3, .3);
-    vec3 cercle5 = vec3(0., 0., .07);
+    vec3 cercle5 = vec3(0., 0., .25);
 
     // animate circle pos and radius
     cercle1.x += sin( (iTime+0.)/4. + sin(iTime +12.) ) / 4.;
@@ -48,8 +48,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float c = (c1+c2+c3+c4+c5)*1.5;
         
     // treshold, comment it to see blur
-    //c = (c > .4 ? 1. : .2);
-    c = smoothstep(0.5,0.52,c);
+    // blur to solid
+    c = smoothstep(0.98,1.0,c);
     
     // color
     float s = (sin(iTime) + 1.) * .5;
