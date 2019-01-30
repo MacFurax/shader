@@ -1,3 +1,10 @@
+//  Function from Iñigo Quiles
+//  www.iquilezles.org/www/articles/functions/functions.htm
+float pcurve( float x, float a, float b ){
+    float k = pow(a+b,a+b) / (pow(a,a)*pow(b,b));
+    return k * pow( x, a ) * pow( 1.0-x, b );
+}
+
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
     // Normalized pixel coordinates (from 0 to 1)
@@ -46,14 +53,21 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
         
     // sum 
     float c = (c1+c2+c3+c4+c5)*1.5;
-        
+
+    //float y = pcurve(c,1.1,0.1);
+    float y = pcurve(c,20.1,0.1);
+
     // treshold, comment it to see blur
     // blur to solid
     c = smoothstep(0.98,1.0,c);
     
+    c += 1.-y;
+
     // color
     float s = (sin(iTime) + 1.) * .5;
-    vec3 col = vec3((uv.x+.5) * c, (uv.y+.5) * c, s/2.+.4);
+    //vec3 col = vec3((uv.x+.5) * c + .1, s/4.*(uv.y+.5) * c+.1, s/8.+.1);
+    vec3 col = vec3(c);
+    //col = pow(col, vec3(0.4545)); // Gamma correction
     
     // Output to screen
     fragColor = vec4(col,1.0);
