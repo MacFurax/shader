@@ -65,8 +65,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
     // color
     float s = (sin(iTime) + 1.) * .5;
-    //vec3 col = vec3((uv.x+.5) * c + .1, s/4.*(uv.y+.5) * c+.1, s/8.+.1);
-    vec3 col = vec3(c);
+    vec3 col = vec3((uv.x+.5) * c + .1, s/4.*(uv.y+.5) * c+.1, s/8.+.1);
+    //vec3 col = vec3(c);
     //col = pow(col, vec3(0.4545)); // Gamma correction
     
     // Output to screen
