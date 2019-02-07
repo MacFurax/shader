@@ -47,7 +47,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     }
 
     //vec3 col = vec3(1.-minDist-.6, minDist/2., .0); // to get stomac
-    vec3 col = vec3(minDist*2.0); // to get stomac
+    minDist = smoothstep( 0.8, 0.01, minDist);
+    vec3 col = vec3(minDist); // to get stomac
     //vec3 col = vec3(cellIndex); // to get cristal
 
     fragColor = vec4( col ,1.);
