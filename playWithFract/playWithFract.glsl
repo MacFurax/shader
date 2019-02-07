@@ -49,7 +49,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
     // create circle
     float c = distance(fractVal, vec2(.5, .5)); // create gradiant centered in 0->1 cells
-    c = smoothstep(.4, .41, c); // gradiant to circle
+    c = smoothstep(.3, .31, c); // gradiant to circle
     vec3 color = vec3(c);    
 
     //fragColor = vec4( fractVal.xy, c, 1. );
