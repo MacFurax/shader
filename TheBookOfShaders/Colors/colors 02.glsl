@@ -41,17 +41,17 @@ void main() {
     float posCos = (cos(u_time/2.)+1.)/2.;
 
     pct.r = smoothstep(0.0,1.1-posCos, st.x);
-    pct.g = sin(st.x*PI);
-    pct.g = cubicPulse(.1+0.5*posCos, .1+0.4*posSin, st.x);
-    pct.g = pcurve( st.x, 0.1, 4.0 );
+    //pct.g = sin(st.x*PI);
+    //pct.g = cubicPulse(.1+0.5*posCos, .1+0.4*posSin, st.x);
+    pct.g = pcurve( st.x, 0.1+posCos, 1.0 );
     pct.b = pow(st.x,.2+posSin*1.5);
 
     color = mix(colorA, colorB, pct);
 
     // Plot transition lines for each channel
-    color = mix(color,vec3(0.5,0.0,0.0),plot(st,pct.r));
-    color = mix(color,vec3(0.0,0.5,0.0),plot(st,pct.g));
-    color = mix(color,vec3(0.0,0.0,0.5),plot(st,pct.b));
+    //color = mix(color,vec3(0.5,0.0,0.0),plot(st,pct.r));
+    //color = mix(color,vec3(0.0,0.5,0.0),plot(st,pct.g));
+    //color = mix(color,vec3(0.0,0.0,0.5),plot(st,pct.b));
 
     gl_FragColor = vec4(color,1.0);
 }
