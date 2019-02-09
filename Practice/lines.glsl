@@ -44,7 +44,7 @@ void main() {
     color = vec3( 0.0, plotY( uv, uv.x, 0.001),  0.0 );
 
     float c = impulse(5.0, uv.x);
-    float l = plotY(uv, c, 0.001);
+    float l = plotY(uv, c, 0.01);
     color = vec3(l);
     
  	gl_FragColor = vec4(color,1.0);

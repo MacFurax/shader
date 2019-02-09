@@ -20,7 +20,7 @@ void main() {
     //float y = pow(st.x, 50.0);
     //float y = 1.-pow(st.x, 2.0);
     //float y = exp(-st.x);
-    float y = (log(st.x)/4.)+0.7;
+    float y = (log(st.x)/4.)+1.0;
 
 
     vec3 color = vec3(y);
