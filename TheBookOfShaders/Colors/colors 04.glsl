@@ -47,7 +47,7 @@ float cubicPulse( float c, float w, float x )
 void main() {
     vec2 uv = gl_FragCoord.xy/u_resolution.xy;
     uv.x *= u_resolution.x/u_resolution.y;
-    //uv +=vec2(-.1, .0);
+    uv +=vec2(-.01, .0);
     vec3 color = vec3(uv.x);
 
 
@@ -59,6 +59,7 @@ void main() {
  
     // Map the angle (-PI to PI) to the Hue (from 0 to 1)
     // and the Saturation to the radius
+    angle = mod(angle+u_time, TWO_PI);
     angle = (angle/TWO_PI)+0.5;
     //angle = pow(angle, 1.4);
 
@@ -67,7 +68,7 @@ void main() {
     color = hsb2rgb(vec3(angle,radius,1.0));
 
     // make it circle
-    ///color *= smoothstep(.501, .5, distance(uv, vec2(.5)));
+    color *= smoothstep(.501, .5, distance(uv, vec2(.5)));
 
     gl_FragColor = vec4(color,1.0);
 }
