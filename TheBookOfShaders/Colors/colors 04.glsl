@@ -47,8 +47,10 @@ float cubicPulse( float c, float w, float x )
 void main() {
     vec2 uv = gl_FragCoord.xy/u_resolution.xy;
     uv.x *= u_resolution.x/u_resolution.y;
-    uv +=vec2(-.1, .0);
+    //uv +=vec2(-.1, .0);
     vec3 color = vec3(uv.x);
+
+
 
      // Use polar coordinates instead of cartesian
     vec2 toCenter = vec2(0.5)-uv;
@@ -60,11 +62,12 @@ void main() {
     angle = (angle/TWO_PI)+0.5;
     //angle = pow(angle, 1.4);
 
-    angle = ((angle-1.)*(angle-1.))-1.;
+    //angle = ((angle-1.)*(angle-1.))-1.;
     
     color = hsb2rgb(vec3(angle,radius,1.0));
 
-    color *= smoothstep(.501, .5, distance(uv, vec2(.5)));
+    // make it circle
+    ///color *= smoothstep(.501, .5, distance(uv, vec2(.5)));
 
     gl_FragColor = vec4(color,1.0);
 }
