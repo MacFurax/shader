@@ -19,12 +19,30 @@ void main() {
          + vec3(0.6667, 0.8863, 0.2588)*c;
 
     float posSin = sin(u_time*1.5+uv.x*10.)/20.;
-    float posCos = cos(u_time+uv.x*10.)/20.;
+    float posCos = cos(u_time+uv.x*10.)/10.;
 
     color *= step(.2+posSin, uv.y) * 
             (1.-step(.8+posSin, uv.y));
+    
+    //color *= floor(smoothstep(.2+posSin, .8+posSin, uv.y)*10.)/10.;
 
-    color *= (sin(uv.y*500.+posCos*300.)*1.5);
+    float cellx = fract((uv.x-u_time/10.)*10.);
+    float celly = fract((uv.y-posSin)*10.);
+
+    color *= smoothstep( 
+        .31,
+        .3,
+        distance (vec2(cellx, celly), vec2(0.5,0.5))
+        );
+    
+    color *= smoothstep( 
+        .2,
+        .31,
+        distance (vec2(cellx, celly), vec2(0.5,0.5))
+        );
+
+
+    //color *= (sin(uv.y*500.+posCos*300.)*1.5);
 
 
         

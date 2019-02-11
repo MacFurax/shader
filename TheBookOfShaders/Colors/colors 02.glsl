@@ -25,7 +25,7 @@ float cubicPulse( float c, float w, float x )
     return 1.0 - x*x*(3.0-2.0*x);
 }
 
-// 
+// oulse curve
 float pcurve( float x, float a, float b )
 {
     float k = pow(a+b,a+b) / (pow(a,a)*pow(b,b));
