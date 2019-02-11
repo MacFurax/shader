@@ -30,16 +30,16 @@ void main() {
     float celly = fract((uv.y-posSin)*10.);
 
     color *= smoothstep( 
-        .31,
         .3,
+        .31,
         distance (vec2(cellx, celly), vec2(0.5,0.5))
         );
     
-    color *= smoothstep( 
-        .2,
-        .31,
-        distance (vec2(cellx, celly), vec2(0.5,0.5))
-        );
+    // color *= smoothstep( 
+    //     .2,
+    //     .31,
+    //     distance (vec2(cellx, celly), vec2(0.5,0.5))
+    //     );
 
 
     //color *= (sin(uv.y*500.+posCos*300.)*1.5);

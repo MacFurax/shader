@@ -59,7 +59,8 @@ void main() {
  
     // Map the angle (-PI to PI) to the Hue (from 0 to 1)
     // and the Saturation to the radius
-    angle = mod(angle+u_time, TWO_PI);
+    //angle = mod(angle+u_time, TWO_PI);
+    angle = angle+u_time;
     angle = (angle/TWO_PI)+0.5;
     //angle = pow(angle, 1.4);
 
