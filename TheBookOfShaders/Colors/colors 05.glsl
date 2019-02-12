@@ -35,42 +35,29 @@ vec3 hsb2rgb( in vec3 c ){
     return c.z * mix(vec3(1.0), rgb, c.y);
 }
 
-// centered pulse
-float cubicPulse( float c, float w, float x )
+//  Function from Iñigo Quiles
+//http://www.iquilezles.org/www/articles/functions/functions.htm
+float impulse( float k, float x )
 {
-    x = abs(x - c);
-    if( x>w ) return 0.0;
-    x /= w;
-    return 1.0 - x*x*(3.0-2.0*x);
+    float h = k*x;
+    return h*exp(1.0-h);
 }
+
 
 void main() {
     vec2 uv = gl_FragCoord.xy/u_resolution.xy;
     uv.x *= u_resolution.x/u_resolution.y;
-    uv +=vec2(-.01, .0);
-    vec3 color = vec3(uv.x);
 
+    float hue = 0.1;
+    float brigth = 0.9;
+    brigth = 1.-(impulse(2.0+sin(u_time), uv.x)*0.8);
+    //float saturation = impulse(5.0, uv.x);
+    //float saturation = impulse(1.0, uv.x);
+    float saturation = 1.-(impulse(2.0+sin(u_time), uv.x)*1.0);
+    vec3 color = vec3(hsb2rgb(vec3(hue, saturation, brigth)));
 
-
-     // Use polar coordinates instead of cartesian
-    vec2 toCenter = vec2(0.5)-uv;
-    float angle = atan(toCenter.y,toCenter.x);
-    float radius = length(toCenter)*2.0;
- 
-    // Map the angle (-PI to PI) to the Hue (from 0 to 1)
-    // and the Saturation to the radius
-    //angle = mod(angle+u_time, TWO_PI);
-    angle = angle+u_time*3.;
-    angle = (angle/TWO_PI)+0.5;
-    
-    //angle = pow(angle, 1.4);
-
-    //angle = ((angle-1.)*(angle-1.))-1.;
-    
-    color = hsb2rgb(vec3(angle,radius,1.0));
-
-    // make it circle
-    color *= smoothstep(.501, .5, distance(uv, vec2(.5)));
+    color *= smoothstep( .601,.6, uv.y);
+    color *= smoothstep( .4,.401, uv.y);
 
     gl_FragColor = vec4(color,1.0);
 }

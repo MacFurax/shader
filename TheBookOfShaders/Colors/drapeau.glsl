@@ -26,8 +26,11 @@ void main() {
     
     //color *= floor(smoothstep(.2+posSin, .8+posSin, uv.y)*10.)/10.;
 
-    float cellx = fract((uv.x-u_time/10.)*10.);
-    float celly = fract((uv.y-posSin)*10.);
+    
+    //float cellx = fract((uv.x/10.)*10.);
+    //float cellx = fract(((uv.x-(u_time/10.))/60.)*60.);
+    float cellx = fract((uv.x-(u_time*5.)/60.)*60.);
+    float celly = fract((uv.y-posSin)*60.);
 
     color *= smoothstep( 
         .3,
@@ -43,7 +46,6 @@ void main() {
 
 
     //color *= (sin(uv.y*500.+posCos*300.)*1.5);
-
 
         
     //color = vec3( mod(uv.y*10.+posSin*10., 1.) );

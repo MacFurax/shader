@@ -5,8 +5,6 @@ float pcurve( float x, float a, float b ){
     return k * pow( x, a ) * pow( 1.0-x, b );
 }
 
-
-
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
     // Normalized pixel coordinates (from -1 to 1)
@@ -48,7 +46,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float c = d1+d2+d3;
 
     // gradiant to plain circle
-    c = smoothstep(.4, .7, c);
+    c = smoothstep(.4, .41, c);
   
     //float bgc = fract(uv.x*(18.+2.*sin(iTime))+sin(uv.y*14.));
     
