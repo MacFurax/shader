@@ -49,9 +49,9 @@ void main() {
     color = mix(colorA, colorB, pct);
 
     // Plot transition lines for each channel
-    //color = mix(color,vec3(0.5,0.0,0.0),plot(st,pct.r));
-    //color = mix(color,vec3(0.0,0.5,0.0),plot(st,pct.g));
-    //color = mix(color,vec3(0.0,0.0,0.5),plot(st,pct.b));
+    color = mix(color,vec3(0.5,0.0,0.0),plot(st,pct.r));
+    color = mix(color,vec3(0.0,0.5,0.0),plot(st,pct.g));
+    color = mix(color,vec3(0.0,0.0,0.5),plot(st,pct.b));
 
     gl_FragColor = vec4(color,1.0);
 }
