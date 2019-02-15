@@ -1,3 +1,5 @@
+// require Shader Toy extention for VS Code 
+
 //  Function from Iñigo Quiles
 //  www.iquilezles.org/www/articles/functions/functions.htm
 float pcurve( float x, float a, float b ){

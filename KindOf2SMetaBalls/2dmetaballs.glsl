@@ -1,3 +1,5 @@
+// require Shader Toy extention for VS Code 
+
 //  Function from Iñigo Quiles
 //  www.iquilezles.org/www/articles/functions/functions.htm
 float pcurve( float x, float a, float b ){
@@ -65,9 +67,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
     // color
     float s = (sin(iTime) + 1.) * .5;
-    vec3 col = vec3((uv.x+.5) * c + .1, s/4.*(uv.y+.5) * c+.1, s/8.+.1);
-    //vec3 col = vec3(c);
-    col = pow(col, vec3(0.4545)); // Gamma correction
+    //vec3 col = vec3((uv.x+.5) * c + .1, s/4.*(uv.y+.5) * c+.1, s/8.+.1);
+    vec3 col = vec3(c);
+    //col = pow(col, vec3(0.4545)); // Gamma correction
     
     // Output to screen
     fragColor = vec4(col,1.0);

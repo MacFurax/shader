@@ -1,17 +1,13 @@
-/**
- * Part 1 Challenges
- * - Make the circle yellow
- * - Make the circle smaller by decreasing its radius
- * - Make the circle smaller by moving the camera back
- * - Make the size of the circle oscillate using the sin() function and the iTime
- *   uniform provided by shadertoy
- */
+// require Shader Toy extention for VS Code 
+
+//
+// Raymarching metaballs
+//
 
 const int MAX_MARCHING_STEPS = 255;
 const float MIN_DIST = 0.0;
 const float MAX_DIST = 100.0;
 const float EPSILON = 0.0001;
-
 
 
 /**
@@ -200,8 +196,8 @@ vec3 rayDirection(float fieldOfView, vec2 size, vec2 fragCoord) {
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-	vec3 dir = rayDirection(45.0, iResolution.xy, fragCoord);
-    vec3 eye = vec3(0.0, 0.0, 8.0);
+	vec3 dir = rayDirection(60.0, iResolution.xy, fragCoord);
+    vec3 eye = vec3(0.0, 0.0, 10.0);
     float dist = shortestDistanceToSurface(eye, dir, MIN_DIST, MAX_DIST);
     
     if (dist > MAX_DIST - EPSILON) {

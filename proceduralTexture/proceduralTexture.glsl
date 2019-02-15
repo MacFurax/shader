@@ -1,3 +1,6 @@
+// require Shader Toy extention for VS Code 
+
+
 //
 // https://www.youtube.com/watch?v=PBxuVlp7nuM
 // 
@@ -179,7 +182,7 @@ vec3 applyFogY( in vec3  rgb,      // original color of the pixel
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-    float t  =iGlobalTime;
+    float t = iGlobalTime;
 	vec2 uv = fragCoord.xy / iResolution.xy; // 0 <> 1
     uv -= .5; // -.5 <> .5
     uv.x *= iResolution.x/iResolution.y; // compensate for aspect ratio
